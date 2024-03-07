@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float horizontalClamp;
     private bool invincible;
 
+    public List<GameObject> objectsToDelete;
 
     private void Start()
     {
@@ -41,11 +42,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        lives = maxLives;
         playerController = FindObjectOfType<PlayerController>();
         menuUiController = FindObjectOfType<MenuUiController>();
-        meteorSpeed = initialMeteorSpeed;
-        meteorSpawnInterval = initialMeteorSpawnInterval;
+        inGameUiController = FindObjectOfType<InGameUiController>();
+
+        menuUiController.SetUp();
+        inGameUiController.gameObject.SetActive(false);
+        Time.timeScale = 0;
     }
 
     private void Update()
@@ -112,11 +115,30 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         // Lose Game
+        inGameUiController.gameObject.SetActive(false);
+        menuUiController.EnableMainScreen();
+        menuUiController.Lose();
+        Time.timeScale = 0f;
+
+        foreach (GameObject obj in objectsToDelete)
+        {
+            Destroy(obj);
+        }
     }
 
     public void ResetGame()
     {
-        menuUiController.gameObject.SetActive(false);
+        menuUiController.DisableMainScreen();
+        inGameUiController.gameObject.SetActive(true);
+        meteorSpeed = initialMeteorSpeed;
+        meteorSpawnInterval = initialMeteorSpawnInterval;
+        lives = maxLives;
+        score = 0;
+        gameTime = 0;
+        scoreTimer = 0;
+        meat = 0;
+        Time.timeScale = 1;
+        playerController.ResetPosition();
     }
 
     public float GetGameTime()

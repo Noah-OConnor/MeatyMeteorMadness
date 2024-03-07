@@ -57,4 +57,9 @@ public class MeteorController : MonoBehaviour
     {
         movementSpeed = speed;
     }
+
+    private void OnDestroy()
+    {
+        GameManager.instance.objectsToDelete.Remove(gameObject);
+    }
 }

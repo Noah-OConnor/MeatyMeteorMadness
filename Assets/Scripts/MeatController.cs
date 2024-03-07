@@ -35,4 +35,8 @@ public class MeatController : MonoBehaviour
     {
         movementSpeed = speed;
     }
+    private void OnDestroy()
+    {
+        GameManager.instance.objectsToDelete.Remove(gameObject);
+    }
 }

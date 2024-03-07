@@ -10,8 +10,12 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Material initialMaterial;
     [SerializeField] private Material damageMaterial;
+
+    private Vector3 initialPosition;
+
     private void Start()
     {
+        initialPosition = transform.position;
         movementVector = new Vector2(0, 0);
         spriteRenderer = GetComponent<SpriteRenderer>();
         initialMaterial = spriteRenderer.material;
@@ -56,5 +60,10 @@ public class PlayerController : MonoBehaviour
     {
         spriteRenderer.material = initialMaterial;
         GameManager.instance.SetInvincible(false);
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = initialPosition;
     }
 }
