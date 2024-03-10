@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float horizontalClamp;
     private bool invincible;
 
+    public bool munch = false;
+    public bool hurt = false;
+
     public bool lose = true;
 
     public List<GameObject> objectsToDelete;
@@ -94,6 +97,7 @@ public class GameManager : MonoBehaviour
 
     public void EatMeat()
     {
+        munch = true;
         AudioManager.instance.Play(7);
         totalMeat++;
         currentMeat++;
@@ -117,6 +121,10 @@ public class GameManager : MonoBehaviour
             if (lives <= 0)
             {
                 LoseGame();
+            }
+            else
+            {
+                hurt = true;
             }
         }
     }
@@ -143,6 +151,8 @@ public class GameManager : MonoBehaviour
     public void ResetGame()
     {
         lose = false;
+        hurt = false;
+        munch = false;
         StartCoroutine(AudioManager.instance.StartGame());
         menuUiController.DisableMainScreen();
         menuUiController.DisableLoseScreen();

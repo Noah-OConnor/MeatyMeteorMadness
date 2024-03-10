@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
 
     private bool death;
     private bool inGame;
+    private float source5time;
 
     void Awake()
     {
@@ -44,19 +45,24 @@ public class AudioManager : MonoBehaviour
 
     public IEnumerator StartGame()
     {
+        source5time = 0;
         death = false; 
         inGame = true;
         Stop(0);
         Stop(1);
         if (sounds[6].source.time != 0)
         {
+            source5time = sounds[6].clip.length - sounds[6].source.time;
             yield return new WaitForSeconds(sounds[6].clip.length - sounds[6].source.time);
         }
         if (!inGame) yield break;
+        source5time += sounds[5].clip.length;
+        print(source5time);
         sounds[5].source.Play(); // 5 is in_game_music_start
         sounds[6].source.Stop(); // 6 is menu_music_loop
         yield return new WaitForSeconds(sounds[5].clip.length);
-        if (!inGame || sounds[4].source.isPlaying || sounds[6].source.isPlaying) yield break;
+        if (!inGame || sounds[4].source.isPlaying || sounds[6].source.isPlaying
+            || GameManager.instance.GetGameTime() < source5time) yield break;
         sounds[4].source.Play(); // 4 is in_game_music_loop
         sounds[5].source.Stop();
     }
