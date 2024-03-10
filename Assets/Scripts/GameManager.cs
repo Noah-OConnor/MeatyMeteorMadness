@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float horizontalClamp;
     private bool invincible;
 
+    public bool lose = true;
+
     public List<GameObject> objectsToDelete;
 
     private void Start()
@@ -46,13 +48,15 @@ public class GameManager : MonoBehaviour
         menuUiController = FindObjectOfType<MenuUiController>();
         inGameUiController = FindObjectOfType<InGameUiController>();
 
+        AudioManager.instance.Play("menu_music_loop");
         menuUiController.SetUp();
         inGameUiController.gameObject.SetActive(false);
-        Time.timeScale = 0;
+        lose = true;
     }
 
     private void Update()
     {
+        if (lose) return;
         gameTime += Time.deltaTime;
         scoreTimer += Time.deltaTime;
 
@@ -89,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     public void EatMeat()
     {
+        AudioManager.instance.Play(7);
         meat++;
         score += 100;
         if (meat >= 20)
@@ -101,6 +106,8 @@ public class GameManager : MonoBehaviour
     {
         if (!invincible)
         {
+            AudioManager.instance.Play(3);
+            AudioManager.instance.Play(2);
             lives--;
             playerController.TakeDamage();
             invincible = true;
@@ -115,10 +122,12 @@ public class GameManager : MonoBehaviour
     public void LoseGame()
     {
         // Lose Game
+        lose = true;
+        StartCoroutine(AudioManager.instance.Death());
         inGameUiController.gameObject.SetActive(false);
         menuUiController.EnableMainScreen();
         menuUiController.Lose();
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
 
         foreach (GameObject obj in objectsToDelete)
         {
@@ -128,6 +137,8 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
+        lose = false;
+        StartCoroutine(AudioManager.instance.StartGame());
         menuUiController.DisableMainScreen();
         inGameUiController.gameObject.SetActive(true);
         meteorSpeed = initialMeteorSpeed;
@@ -137,7 +148,7 @@ public class GameManager : MonoBehaviour
         gameTime = 0;
         scoreTimer = 0;
         meat = 0;
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         playerController.ResetPosition();
     }
 

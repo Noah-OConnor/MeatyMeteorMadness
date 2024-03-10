@@ -17,6 +17,7 @@ public class MeteorSpawner : MonoBehaviour
 
     private void Update()
     {
+        if (GameManager.instance.lose) return;
         meteorTimer += Time.deltaTime;
         meatTimer += Time.deltaTime;
 
