@@ -6,7 +6,9 @@ using TMPro;
 public class MenuUiController : MonoBehaviour
 {
     [SerializeField] private GameObject mainScreen;
-    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private GameObject loseScreen;
+    //[SerializeField] private TMP_Text titleText;
+    [SerializeField] private GameObject stats;
 
     [SerializeField] private GameObject bestStats;
     [SerializeField] private TMP_Text bestScore;
@@ -20,22 +22,24 @@ public class MenuUiController : MonoBehaviour
 
     public void SetUp()
     {
+        AudioManager.instance.MainMenu();
         EnableMainScreen();
+        DisableLoseScreen();
         ShowBests();
-        titleText.text = "DINO GAME";
+        //titleText.text = "DINO GAME";
         thisRunStats.SetActive(false);
     }
 
     public void Lose()
     {
-        titleText.text = "EXTINCTION";
+        //titleText.text = "EXTINCTION";
 
         thisScore.text = GameManager.instance.GetScore().ToString();
-        thisMeat.text = GameManager.instance.GetMeat().ToString();
+        thisMeat.text = GameManager.instance.GetTotalMeat().ToString();
 
         int minutes = (int)GameManager.instance.GetGameTime() / 60;
         int seconds = (int)GameManager.instance.GetGameTime() - (minutes * 60);
-        thisTime.text = minutes.ToString("#00") + ":" + seconds.ToString("#00");
+        thisTime.text = minutes.ToString("#00") + " " + seconds.ToString("#00");
 
         if (PlayerPrefs.HasKey("BestScore"))
         {
@@ -43,9 +47,9 @@ public class MenuUiController : MonoBehaviour
             {
                 PlayerPrefs.SetInt("BestScore", GameManager.instance.GetScore());
             }
-            if (GameManager.instance.GetMeat() > PlayerPrefs.GetInt("BestMeat"))
+            if (GameManager.instance.GetTotalMeat() > PlayerPrefs.GetInt("BestMeat"))
             {
-                PlayerPrefs.SetInt("BestMeat", GameManager.instance.GetMeat());
+                PlayerPrefs.SetInt("BestMeat", GameManager.instance.GetTotalMeat());
             }
             if (GameManager.instance.GetGameTime() > PlayerPrefs.GetInt("BestTime"))
             {
@@ -54,7 +58,7 @@ public class MenuUiController : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("BestMeat", GameManager.instance.GetMeat());
+            PlayerPrefs.SetInt("BestMeat", GameManager.instance.GetTotalMeat());
             PlayerPrefs.SetInt("BestScore", GameManager.instance.GetScore());
             PlayerPrefs.SetInt("BestTime", (int)GameManager.instance.GetGameTime());
         }
@@ -71,13 +75,13 @@ public class MenuUiController : MonoBehaviour
 
             int minutes = PlayerPrefs.GetInt("BestTime") / 60;
             int seconds = PlayerPrefs.GetInt("BestTime") - (minutes * 60);
-            bestTime.text = minutes.ToString("#00") + ":" + seconds.ToString("#00");
+            bestTime.text = minutes.ToString("#00") + " " + seconds.ToString("#00");
         }
         else 
         {
             bestScore.text = "0";
             bestMeat.text = "0";
-            bestTime.text = "00:00";
+            bestTime.text = "00  00";
 
             bestStats.SetActive(false);
         }
@@ -95,6 +99,13 @@ public class MenuUiController : MonoBehaviour
         print("Quit Game");
     }
 
+    public void MainMenuButton()
+    {
+        DisableLoseScreen();
+        EnableMainScreen();
+        AudioManager.instance.MainMenu();
+    }
+
     public void DisableMainScreen()
     {
         mainScreen.SetActive(false);
@@ -103,5 +114,25 @@ public class MenuUiController : MonoBehaviour
     public void EnableMainScreen()
     {
         mainScreen.SetActive(true);
+    }
+
+    public void DisableLoseScreen()
+    {
+        loseScreen.SetActive(false);
+    }
+
+    public void EnableLoseScreen()
+    {
+        loseScreen.SetActive(true);
+    }
+
+    public void DisableStatsScreen()
+    {
+        stats.SetActive(false);
+    }
+
+    public void EnableStatsScreen()
+    {
+        stats.SetActive(true);
     }
 }

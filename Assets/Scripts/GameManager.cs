@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] private int maxLives;
     private int lives;
-    private int meat;
+    private int totalMeat;
+    private int currentMeat;
     private float gameTime;
     private int score;
     [SerializeField] private int timeScoreBonus;
@@ -48,8 +49,8 @@ public class GameManager : MonoBehaviour
         menuUiController = FindObjectOfType<MenuUiController>();
         inGameUiController = FindObjectOfType<InGameUiController>();
 
-        AudioManager.instance.Play("menu_music_loop");
         menuUiController.SetUp();
+        playerController.gameObject.SetActive(false);
         inGameUiController.gameObject.SetActive(false);
         lose = true;
     }
@@ -94,11 +95,12 @@ public class GameManager : MonoBehaviour
     public void EatMeat()
     {
         AudioManager.instance.Play(7);
-        meat++;
+        totalMeat++;
+        currentMeat++;
         score += 100;
-        if (meat >= 20)
+        if (currentMeat >= 20)
         {
-            meat = 0;
+            currentMeat = 0;
             lives++;
         }
     }
@@ -125,13 +127,16 @@ public class GameManager : MonoBehaviour
         lose = true;
         StartCoroutine(AudioManager.instance.Death());
         inGameUiController.gameObject.SetActive(false);
-        menuUiController.EnableMainScreen();
+        menuUiController.DisableMainScreen();
+        menuUiController.EnableLoseScreen();
+        menuUiController.EnableStatsScreen();
         menuUiController.Lose();
+        playerController.gameObject.SetActive(false);
         //Time.timeScale = 0f;
 
         foreach (GameObject obj in objectsToDelete)
         {
-            Destroy(obj);
+            obj.SetActive(false);
         }
     }
 
@@ -140,6 +145,8 @@ public class GameManager : MonoBehaviour
         lose = false;
         StartCoroutine(AudioManager.instance.StartGame());
         menuUiController.DisableMainScreen();
+        menuUiController.DisableLoseScreen();
+        menuUiController.DisableStatsScreen();
         inGameUiController.gameObject.SetActive(true);
         meteorSpeed = initialMeteorSpeed;
         meteorSpawnInterval = initialMeteorSpawnInterval;
@@ -147,8 +154,10 @@ public class GameManager : MonoBehaviour
         score = 0;
         gameTime = 0;
         scoreTimer = 0;
-        meat = 0;
+        totalMeat = 0;
+        currentMeat = 0;
         //Time.timeScale = 1;
+        playerController.gameObject.SetActive(true);
         playerController.ResetPosition();
     }
 
@@ -167,9 +176,9 @@ public class GameManager : MonoBehaviour
         return lives;
     }
 
-    public int GetMeat()
+    public int GetTotalMeat()
     {
-        return meat;
+        return totalMeat;
     }
 
     public float GetMeteorSpeed()

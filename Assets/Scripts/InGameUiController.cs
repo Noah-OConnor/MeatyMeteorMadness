@@ -40,21 +40,21 @@ public class InGameUiController : MonoBehaviour
             UpdateLives();
         }
 
-        if (GameManager.instance.GetMeat()!= lastMeatCount)
+        if (GameManager.instance.GetTotalMeat()!= lastMeatCount)
         {
-            lastMeatCount = GameManager.instance.GetMeat();
+            lastMeatCount = GameManager.instance.GetTotalMeat();
             UpdateMeatCount();
         }
 
         // Updates the Text UI Element
         int minutes = (int) GameManager.instance.GetGameTime() / 60;
         int seconds = (int) GameManager.instance.GetGameTime() - (minutes * 60);
-        timeText.text = minutes.ToString("#00") + ":" + seconds.ToString("#00");
+        timeText.text = minutes.ToString("#00") + " " + seconds.ToString("#00");
     }
 
     private void UpdateScore()
     {
-        scoreText.text = "Score: " + GameManager.instance.GetScore();
+        scoreText.text = "Score " + GameManager.instance.GetScore();
     }
 
     private void UpdateLives()
@@ -64,18 +64,28 @@ public class InGameUiController : MonoBehaviour
             case 0:
                 // lose game
                 hpIcon1.SetActive(false);
+                hpIcon2.SetActive(false);
+                hpIcon3.SetActive(false);
+                extraLivesText.gameObject.SetActive(false);
                 break;
             case 1:
                 // have 1 heart shown
+                hpIcon1.SetActive(true);
                 hpIcon2.SetActive(false);
+                hpIcon3.SetActive(false);
+                extraLivesText.gameObject.SetActive(false);
                 break;
             case 2:
                 // have 2 heart shown
+                hpIcon1.SetActive(true);
                 hpIcon2.SetActive(true);
                 hpIcon3.SetActive(false);
+                extraLivesText.gameObject.SetActive(false);
                 break;
             case 3:
                 // have 3 heart shown
+                hpIcon1.SetActive(true);
+                hpIcon2.SetActive(true);
                 hpIcon3.SetActive(true);
                 extraLivesText.gameObject.SetActive(false);
                 break;
@@ -89,6 +99,6 @@ public class InGameUiController : MonoBehaviour
 
     private void UpdateMeatCount()
     {
-        meatCountText.text = "x" + GameManager.instance.GetMeat();
+        meatCountText.text = "x" + GameManager.instance.GetTotalMeat();
     }
 }
