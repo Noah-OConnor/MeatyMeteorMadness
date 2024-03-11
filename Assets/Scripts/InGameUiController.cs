@@ -92,7 +92,7 @@ public class InGameUiController : MonoBehaviour
             default:
                 // have 3 heart shown and Extra Lives Text
                 extraLivesText.gameObject.SetActive(true);
-                extraLivesText.text = "+ " + (GameManager.instance.GetLives() - 3);
+                extraLivesText.text = "+" + (GameManager.instance.GetLives() - 3);
                 break;
         }
     }

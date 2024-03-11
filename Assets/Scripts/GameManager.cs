@@ -60,6 +60,23 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         if (lose) return;
         gameTime += Time.deltaTime;
         scoreTimer += Time.deltaTime;
@@ -79,18 +96,6 @@ public class GameManager : MonoBehaviour
             if (meteorSpawnInterval < meteorSpawnIntervalMin)
             {
                 meteorSpawnInterval = meteorSpawnIntervalMin;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape)) 
-        {
-            if (Time.timeScale == 0)
-            {
-                Time.timeScale = 1;
-            }
-            else
-            {
-                Time.timeScale = 0;
             }
         }
     }

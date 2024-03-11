@@ -7,11 +7,14 @@ public class MeteorController : MonoBehaviour
     private float movementSpeed;
     private Vector2 movementVector;
     private bool contact = false;
+    private Animator animatior;
 
-    private void Start()
+    private void Awake()
     {
         movementVector = Vector2.zero;
+        animatior = GetComponentInChildren<Animator>();
     }
+
     private void FixedUpdate()
     {
         movementVector.y = -movementSpeed * Time.deltaTime;
@@ -49,6 +52,8 @@ public class MeteorController : MonoBehaviour
     public void SetMovementSpeed(float speed)
     {
         movementSpeed = speed;
+        animatior.speed = speed * 0.33f;
+        print(animatior.speed);
     }
 
     private void OnDestroy()
