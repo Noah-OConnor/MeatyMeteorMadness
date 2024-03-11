@@ -13,7 +13,7 @@ public class MeatController : MonoBehaviour
         movementVector = Vector2.zero;
         objectPool = ObjectPool.Instance;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         movementVector.y = -movementSpeed * Time.deltaTime;
         transform.Translate(movementVector);
