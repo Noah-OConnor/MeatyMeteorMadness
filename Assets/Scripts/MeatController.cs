@@ -17,6 +17,11 @@ public class MeatController : MonoBehaviour
     {
         movementVector.y = -movementSpeed * Time.deltaTime;
         transform.Translate(movementVector);
+
+        if (transform.position.y <= -6)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -24,10 +29,6 @@ public class MeatController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameManager.instance.EatMeat();
-            gameObject.SetActive(false);
-        }
-        else
-        {
             gameObject.SetActive(false);
         }
     }

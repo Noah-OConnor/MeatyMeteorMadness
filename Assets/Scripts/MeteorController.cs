@@ -18,6 +18,17 @@ public class MeteorController : MonoBehaviour
     {
         movementVector.y = -movementSpeed * Time.deltaTime;
         transform.Translate(movementVector);
+
+        if (transform.position.y <= -6)
+        {
+            gameObject.SetActive(false);
+        }
+
+        if (contact && !GameManager.instance.GetInvincible())
+        {
+            GameManager.instance.DamagePlayer();
+            gameObject.SetActive(false);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -33,10 +44,6 @@ public class MeteorController : MonoBehaviour
             {
                 contact = true;
             }
-        }
-        else
-        {
-            gameObject.SetActive(false);
         }
     }
 
