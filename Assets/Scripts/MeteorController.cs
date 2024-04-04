@@ -14,8 +14,7 @@ public class MeteorController : MonoBehaviour
         movementVector = Vector2.zero;
         animatior = GetComponentInChildren<Animator>();
     }
-
-    private void FixedUpdate()
+    private void Update()
     {
         movementVector.y = -movementSpeed * Time.deltaTime;
         transform.Translate(movementVector);
