@@ -21,13 +21,13 @@ public class MeteorController : MonoBehaviour
 
         if (transform.position.y <= -6)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
 
         if (contact && !GameManager.instance.GetInvincible())
         {
             GameManager.instance.DamagePlayer();
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
@@ -38,7 +38,7 @@ public class MeteorController : MonoBehaviour
             if (!GameManager.instance.GetInvincible())
             {
                 GameManager.instance.DamagePlayer();
-                gameObject.SetActive(false);
+                Destroy(gameObject);
             }
             else
             {

@@ -6,12 +6,10 @@ public class MeatController : MonoBehaviour
 {
     private float movementSpeed;
     private Vector2 movementVector;
-    
-    ObjectPool objectPool;
+
     private void Start()
     {
         movementVector = Vector2.zero;
-        objectPool = ObjectPool.Instance;
     }
     private void Update()
     {
@@ -20,7 +18,7 @@ public class MeatController : MonoBehaviour
 
         if (transform.position.y <= -6)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
@@ -29,7 +27,7 @@ public class MeatController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             GameManager.instance.EatMeat();
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
