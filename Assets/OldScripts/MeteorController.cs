@@ -59,7 +59,7 @@ public class MeteorController : MonoBehaviour
     {
         movementSpeed = speed;
         animatior.speed = speed * 0.33f;
-        print(animatior.speed);
+        //print(animatior.speed);
     }
 
     private void OnDestroy()

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,9 +47,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        playerController = FindObjectOfType<PlayerController>();
-        menuUiController = FindObjectOfType<MenuUiController>();
-        inGameUiController = FindObjectOfType<InGameUiController>();
+        playerController = FindFirstObjectByType<PlayerController>();
+        menuUiController = FindFirstObjectByType<MenuUiController>();
+        inGameUiController = FindFirstObjectByType<InGameUiController>();
 
         menuUiController.SetUp();
         playerController.gameObject.SetActive(false);
@@ -113,6 +112,7 @@ public class GameManager : MonoBehaviour
             lives++;
         }
     }
+
     public void DamagePlayer()
     {
         if (!invincible)

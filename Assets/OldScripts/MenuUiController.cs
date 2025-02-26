@@ -96,7 +96,7 @@ public class MenuUiController : MonoBehaviour
     public void QuitButton()
     {
         Application.Quit();
-        print("Quit Game");
+        //print("Quit Game");
     }
 
     public void MainMenuButton()

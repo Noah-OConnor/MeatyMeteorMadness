@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
         }
         if (!inGame) yield break;
         source5time += sounds[5].clip.length;
-        print(source5time);
+        //print(source5time);
         sounds[5].source.Play(); // 5 is in_game_music_start
         sounds[6].source.Stop(); // 6 is menu_music_loop
         yield return new WaitForSeconds(sounds[5].clip.length);
