@@ -20,7 +20,8 @@ public class _GameManager : MonoBehaviour
     private float scoreTimer;
 
     private PlayerController playerController;
-    private InGameUiController inGameUiController;
+    //private InGameUiController inGameUiController;
+    private HUDController inGameUiController;
     private MenuUiController menuUiController;
 
     [SerializeField] private float initialMeteorSpeed;
@@ -55,7 +56,7 @@ public class _GameManager : MonoBehaviour
 
         playerController = FindFirstObjectByType<PlayerController>();
         menuUiController = FindFirstObjectByType<MenuUiController>();
-        inGameUiController = FindFirstObjectByType<InGameUiController>();
+        inGameUiController = FindFirstObjectByType<HUDController>();
 
         menuUiController.SetUp();
         playerController.gameObject.SetActive(false);
