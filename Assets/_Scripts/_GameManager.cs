@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// DESIGN PATTERN: Singleton
+// DESIGN PATTERN: Singleton, Observer
 // We want to ensure that only one game manager exists.
 // If another existed, it could make different choices
 // or provide different information than what is intended,
 // ruining the experience of the game.
+// Implements the Observer pattern using C# events to update
+// the HUD UI and disable meteors and meats when the player loses
 
 public class _GameManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class _GameManager : MonoBehaviour
     private int lives;
     private int totalMeat;
     private int currentMeat;
+    private int previousGameTime;
     private float gameTime;
     private int score;
     [SerializeField] private int timeScoreBonus;
@@ -40,7 +43,15 @@ public class _GameManager : MonoBehaviour
 
     public bool lose = true;
 
-    public List<GameObject> objectsToDelete;
+    // Event that observers can subscribe to
+    public delegate void IntUpdated(int newScore);
+    public static event IntUpdated OnScoreUpdated;
+    public static event IntUpdated OnLivesUpdated;
+    public static event IntUpdated OnTimeUpdated;
+    public static event IntUpdated OnMeatCountUpdated;
+
+    public delegate void GameOver();
+    public static event GameOver OnGameOver;
 
     private void Start()
     {
@@ -67,11 +78,15 @@ public class _GameManager : MonoBehaviour
     {
         if (lose) return;
         gameTime += Time.deltaTime;
+        if ((int)gameTime != previousGameTime)
+        {
+            SetTime(gameTime);
+        }
         scoreTimer += Time.deltaTime;
 
         if (scoreTimer > 5)
         {
-            score += timeScoreBonus * (1 + ((int)gameTime / 60));
+            SetScore(score + (timeScoreBonus * (1 + ((int)gameTime / 60))));
             scoreTimer = 0;
 
             meteorSpeed *= (1 + difficultyMultiplier);
@@ -88,17 +103,41 @@ public class _GameManager : MonoBehaviour
         }
     }
 
+    private void SetScore(int amount)
+    {
+        score = amount;
+        OnScoreUpdated?.Invoke(score);
+    }
+
+    private void SetLives(int amount)
+    {
+        lives = amount;
+        OnLivesUpdated?.Invoke(lives);
+    }
+
+    private void SetTime(float amount)
+    {
+        previousGameTime = (int)gameTime;
+        OnTimeUpdated?.Invoke(previousGameTime);
+    }
+
+    private void SetMeatCount(int amount)
+    {
+        currentMeat = amount;
+        OnMeatCountUpdated?.Invoke(currentMeat);
+    }
+
     public void EatMeat()
     {
         munch = true;
         AudioManager.instance.Play(7);
         totalMeat++;
-        currentMeat++;
-        score += 100;
+        SetMeatCount(currentMeat + 1);
+        SetScore(score + 100);
         if (currentMeat >= 20)
         {
-            currentMeat = 0;
-            lives++;
+            SetMeatCount(0);
+            SetLives(lives + 1);
         }
     }
 
@@ -108,7 +147,7 @@ public class _GameManager : MonoBehaviour
         {
             AudioManager.instance.Play(3);
             AudioManager.instance.Play(2);
-            lives--;
+            SetLives(lives - 1);
             playerController.TakeDamage();
             invincible = true;
 
@@ -134,12 +173,8 @@ public class _GameManager : MonoBehaviour
         menuUiController.EnableStatsScreen();
         menuUiController.Lose();
         playerController.gameObject.SetActive(false);
-        //Time.timeScale = 0f;
-
-        foreach (GameObject obj in objectsToDelete)
-        {
-            obj.SetActive(false);
-        }
+        CancelInvoke(nameof(SetTime));
+        OnGameOver?.Invoke();
     }
 
     public void ResetGame()
@@ -154,13 +189,12 @@ public class _GameManager : MonoBehaviour
         inGameUiController.gameObject.SetActive(true);
         meteorSpeed = initialMeteorSpeed;
         meteorSpawnInterval = initialMeteorSpawnInterval;
-        lives = maxLives;
-        score = 0;
+        SetLives(maxLives);
+        SetScore(0);
         gameTime = 0;
         scoreTimer = 0;
         totalMeat = 0;
-        currentMeat = 0;
-        //Time.timeScale = 1;
+        SetMeatCount(0);
         playerController.gameObject.SetActive(true);
         playerController.ResetPosition();
     }

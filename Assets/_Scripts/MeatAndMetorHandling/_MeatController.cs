@@ -11,7 +11,7 @@ public class _MeatController : FallingObject
         if (contact)
         {
             _GameManager.instance.EatMeat();
-            gameObject.SetActive(false);
+            DisableSelf();
         }
     }
 }

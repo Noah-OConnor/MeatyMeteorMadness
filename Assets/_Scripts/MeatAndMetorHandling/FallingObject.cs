@@ -18,6 +18,18 @@ public abstract class FallingObject : MonoBehaviour, IPrototype<FallingObject>
     protected void OnEnable()
     {
         contact = false;
+        if (_GameManager.instance != null)
+        {
+            _GameManager.OnGameOver += DisableSelf;
+        }
+    }
+
+    protected void OnDisable()
+    {
+        if (_GameManager.instance != null)
+        {
+            _GameManager.OnGameOver -= DisableSelf;
+        }
     }
 
     // Sealed method enforces a fixed update sequence
@@ -66,4 +78,10 @@ public abstract class FallingObject : MonoBehaviour, IPrototype<FallingObject>
         clone.SetMovementSpeed(this.movementSpeed);
         return clone;
     }
+
+    public virtual void DisableSelf()
+    {
+        gameObject.SetActive(false);
+    }
+        
 }

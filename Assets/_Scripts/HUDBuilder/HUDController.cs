@@ -1,10 +1,12 @@
 using TMPro;
 using UnityEngine;
 
-// DESIGN PATTERN: Builder Pattern
+// DESIGN PATTERN: Builder Pattern, Observer Pattern
 // The controller class uses the builder and director to construct the HUD.
 // It initializes the HUD using the builder pattern and updates the HUD elements
 // based on the game state.
+// Implements the Observer pattern by subscirbing to gamemanger events and calling
+// functions based on that
 
 public class HUDController : MonoBehaviour
 {
@@ -24,7 +26,25 @@ public class HUDController : MonoBehaviour
     private int lastLives;
     private int lastMeatCount;
 
-    private void Start()
+    private void OnEnable()
+    {
+        if (_GameManager.instance == null || hud == null) return;
+        _GameManager.OnScoreUpdated += hud.UpdateScore;
+        _GameManager.OnLivesUpdated += hud.UpdateLives;
+        _GameManager.OnTimeUpdated += hud.UpdateTime;
+        _GameManager.OnMeatCountUpdated += hud.UpdateMeatCount;
+    }
+
+    private void OnDisable()
+    {
+        if (_GameManager.instance == null || hud == null) return;
+        _GameManager.OnScoreUpdated -= hud.UpdateScore;
+        _GameManager.OnLivesUpdated -= hud.UpdateLives;
+        _GameManager.OnTimeUpdated -= hud.UpdateTime;
+        _GameManager.OnMeatCountUpdated -= hud.UpdateMeatCount;
+    }
+
+    private void Awake()
     {
         // Use Builder to create HUD
         IHUDBuilder hudBuilder = new HUDBuilder();
@@ -32,29 +52,6 @@ public class HUDController : MonoBehaviour
         hud = director.ConstructHUD(scoreText, extraLivesText, timeText, meatCountText,
                                     hpIcon1, hpIcon2, hpIcon3, meatIcon);
 
-        hud.UpdateScore(lastScore);
-    }
-
-    private void Update()
-    {
-        if (_GameManager.instance.GetScore() != lastScore)
-        {
-            lastScore = _GameManager.instance.GetScore();
-            hud.UpdateScore(lastScore);
-        }
-
-        if (_GameManager.instance.GetLives() != lastLives)
-        {
-            lastLives = _GameManager.instance.GetLives();
-            hud.UpdateLives(lastLives);
-        }
-
-        if (_GameManager.instance.GetTotalMeat() != lastMeatCount)
-        {
-            lastMeatCount = _GameManager.instance.GetTotalMeat();
-            hud.UpdateMeatCount(lastMeatCount);
-        }
-
-        hud.UpdateTime(_GameManager.instance.GetGameTime());
+        hud.UpdateScore(0);
     }
 }

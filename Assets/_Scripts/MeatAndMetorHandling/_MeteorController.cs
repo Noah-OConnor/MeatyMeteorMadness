@@ -20,7 +20,7 @@ public class _MeteorController : FallingObject
             if (!_GameManager.instance.GetInvincible())
             {
                 _GameManager.instance.DamagePlayer();
-                gameObject.SetActive(false);
+                DisableSelf();
             }
         }
     }

@@ -45,10 +45,10 @@ public class HUD
         MeatCountText.text = "x" + meatCount;
     }
 
-    public void UpdateTime(float gameTime)
+    public void UpdateTime(int gameTime)
     {
-        int minutes = (int)gameTime / 60;
-        int seconds = (int)gameTime - (minutes * 60);
+        int minutes = gameTime / 60;
+        int seconds = gameTime - (minutes * 60);
         TimeText.text = minutes.ToString("00") + " " + seconds.ToString("00");
     }
 }
