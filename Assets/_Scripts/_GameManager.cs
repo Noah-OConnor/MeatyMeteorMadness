@@ -19,8 +19,7 @@ public class _GameManager : MonoBehaviour
     [SerializeField] private int timeScoreBonus;
     private float scoreTimer;
 
-    private PlayerController playerController;
-    //private InGameUiController inGameUiController;
+    private _PlayerController playerController;
     private HUDController inGameUiController;
     private MenuUiController menuUiController;
 
@@ -54,7 +53,7 @@ public class _GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        playerController = FindFirstObjectByType<PlayerController>();
+        playerController = FindFirstObjectByType<_PlayerController>();
         menuUiController = FindFirstObjectByType<MenuUiController>();
         inGameUiController = FindFirstObjectByType<HUDController>();
 
@@ -66,23 +65,6 @@ public class _GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (Time.timeScale == 0)
-            {
-                Time.timeScale = 1;
-            }
-            else
-            {
-                Time.timeScale = 0;
-            }
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
         if (lose) return;
         gameTime += Time.deltaTime;
         scoreTimer += Time.deltaTime;

@@ -1,44 +1,17 @@
 ﻿using UnityEngine;
 
-public class _MeatController : MonoBehaviour, IPrototype<_MeatController>
+// DESIGN PATTERNS - Template Method, Prototype
+// Implements the Template Method pattern by following a strict Update() sequence from FallingObject.
+// Implements the Prototype pattern by allowing Meat objects to be cloned instead of instantiated.
+
+public class _MeatController : FallingObject
 {
-    private float movementSpeed;
-    private Vector2 movementVector;
-
-    private void Start()
+    protected override void HandleCollision()
     {
-        movementVector = Vector2.zero;
-    }
-
-    private void Update()
-    {
-        movementVector.y = -movementSpeed * Time.deltaTime;
-        transform.Translate(movementVector);
-
-        if (transform.position.y <= -6)
+        if (contact)
         {
-            gameObject.SetActive(false); // Instead of Destroying
+            _GameManager.instance.EatMeat();
+            gameObject.SetActive(false);
         }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            GameManager.instance.EatMeat();
-            gameObject.SetActive(false); // Instead of Destroying
-        }
-    }
-
-    public void SetMovementSpeed(float speed)
-    {
-        movementSpeed = speed;
-    }
-
-    public _MeatController Clone()
-    {
-        _MeatController clone = Instantiate(this);
-        clone.SetMovementSpeed(this.movementSpeed);
-        return clone;
     }
 }

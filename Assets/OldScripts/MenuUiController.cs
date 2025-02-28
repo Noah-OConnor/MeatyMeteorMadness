@@ -34,33 +34,33 @@ public class MenuUiController : MonoBehaviour
     {
         //titleText.text = "EXTINCTION";
 
-        thisScore.text = GameManager.instance.GetScore().ToString();
-        thisMeat.text = GameManager.instance.GetTotalMeat().ToString();
+        thisScore.text = _GameManager.instance.GetScore().ToString();
+        thisMeat.text = _GameManager.instance.GetTotalMeat().ToString();
 
-        int minutes = (int)GameManager.instance.GetGameTime() / 60;
-        int seconds = (int)GameManager.instance.GetGameTime() - (minutes * 60);
+        int minutes = (int)_GameManager.instance.GetGameTime() / 60;
+        int seconds = (int)_GameManager.instance.GetGameTime() - (minutes * 60);
         thisTime.text = minutes.ToString("#00") + " " + seconds.ToString("#00");
 
         if (PlayerPrefs.HasKey("BestScore"))
         {
-            if (GameManager.instance.GetScore() > PlayerPrefs.GetInt("BestScore"))
+            if (_GameManager.instance.GetScore() > PlayerPrefs.GetInt("BestScore"))
             {
-                PlayerPrefs.SetInt("BestScore", GameManager.instance.GetScore());
+                PlayerPrefs.SetInt("BestScore", _GameManager.instance.GetScore());
             }
-            if (GameManager.instance.GetTotalMeat() > PlayerPrefs.GetInt("BestMeat"))
+            if (_GameManager.instance.GetTotalMeat() > PlayerPrefs.GetInt("BestMeat"))
             {
-                PlayerPrefs.SetInt("BestMeat", GameManager.instance.GetTotalMeat());
+                PlayerPrefs.SetInt("BestMeat", _GameManager.instance.GetTotalMeat());
             }
-            if (GameManager.instance.GetGameTime() > PlayerPrefs.GetInt("BestTime"))
+            if (_GameManager.instance.GetGameTime() > PlayerPrefs.GetInt("BestTime"))
             {
-                PlayerPrefs.SetInt("BestTime", (int)GameManager.instance.GetGameTime());
+                PlayerPrefs.SetInt("BestTime", (int)_GameManager.instance.GetGameTime());
             }
         }
         else
         {
-            PlayerPrefs.SetInt("BestMeat", GameManager.instance.GetTotalMeat());
-            PlayerPrefs.SetInt("BestScore", GameManager.instance.GetScore());
-            PlayerPrefs.SetInt("BestTime", (int)GameManager.instance.GetGameTime());
+            PlayerPrefs.SetInt("BestMeat", _GameManager.instance.GetTotalMeat());
+            PlayerPrefs.SetInt("BestScore", _GameManager.instance.GetScore());
+            PlayerPrefs.SetInt("BestTime", (int)_GameManager.instance.GetGameTime());
         }
         ShowBests();
     }
@@ -90,7 +90,7 @@ public class MenuUiController : MonoBehaviour
     public void PlayButton()
     {
         thisRunStats.SetActive(true);
-        GameManager.instance.ResetGame();
+        _GameManager.instance.ResetGame();
     }
 
     public void QuitButton()

@@ -37,24 +37,24 @@ public class HUDController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.instance.GetScore() != lastScore)
+        if (_GameManager.instance.GetScore() != lastScore)
         {
-            lastScore = GameManager.instance.GetScore();
+            lastScore = _GameManager.instance.GetScore();
             hud.UpdateScore(lastScore);
         }
 
-        if (GameManager.instance.GetLives() != lastLives)
+        if (_GameManager.instance.GetLives() != lastLives)
         {
-            lastLives = GameManager.instance.GetLives();
+            lastLives = _GameManager.instance.GetLives();
             hud.UpdateLives(lastLives);
         }
 
-        if (GameManager.instance.GetTotalMeat() != lastMeatCount)
+        if (_GameManager.instance.GetTotalMeat() != lastMeatCount)
         {
-            lastMeatCount = GameManager.instance.GetTotalMeat();
+            lastMeatCount = _GameManager.instance.GetTotalMeat();
             hud.UpdateMeatCount(lastMeatCount);
         }
 
-        hud.UpdateTime(GameManager.instance.GetGameTime());
+        hud.UpdateTime(_GameManager.instance.GetGameTime());
     }
 }

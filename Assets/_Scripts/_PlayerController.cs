@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+// DESIGN PATTERN - Facade
+// Uses the InputManager to handle player movement instead of processing input directly.
+
+public class _PlayerController : MonoBehaviour
 {
     public float movementSpeed;
     private float horizontalInput;
@@ -10,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Material initialMaterial;
     [SerializeField] private Material damageMaterial;
-    public Animator animator;
+    private Animator animator;
 
     private Vector3 initialPosition;
 
@@ -23,15 +24,10 @@ public class PlayerController : MonoBehaviour
         initialMaterial = spriteRenderer.material;
     }
 
-    private void Update()
+    public void HandleMovement(float horizontalInput)
     {
         if (_GameManager.instance.lose) return;
-        HandleMovement();
-    }
 
-    private void HandleMovement()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
         if (horizontalInput != 0)
         {
             if (Mathf.Abs(transform.position.x + (horizontalInput * _GameManager.instance.GetMeteorSpeed()
@@ -51,6 +47,11 @@ public class PlayerController : MonoBehaviour
             movementVector.x = 0;
         }
 
+        UpdateAnimation(horizontalInput);
+    }
+
+    private void UpdateAnimation(float horizontalInput)
+    {
         if (_GameManager.instance.munch)
         {
             _GameManager.instance.munch = false;

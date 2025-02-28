@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectPool<T> where T : MonoBehaviour
+// DESIGN PATTERN - Object Pool
+// Implements the Object Pool pattern by maintaining a pool of reusable objects.
+// Instead of frequently creating and destroying objects, inactive objects are stored and reactivated when needed,
+// improving performance and memory efficiency.
+
+public class ObjectPool<T> where T : FallingObject
 {
     private List<T> pool = new List<T>();
     private T prototype;

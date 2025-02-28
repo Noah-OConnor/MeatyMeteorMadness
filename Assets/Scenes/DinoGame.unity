@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 90544308}
   - component: {fileID: 90544309}
   - component: {fileID: 90544310}
+  - component: {fileID: 90544311}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -147,7 +148,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90544302}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfb831376332c3d419501bbcb51bdc41, type: 3}
   m_Name: 
@@ -364,6 +365,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &90544311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90544302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72fcdfbb096f47142b678101d360f89c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 5
+  damageMaterial: {fileID: 2100000, guid: 40adbadda85160c45b42be63bf957689, type: 2}
 --- !u!1 &137603487
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 271986270}
   - component: {fileID: 271986269}
+  - component: {fileID: 271986271}
   m_Layer: 0
   m_Name: MeteorSpawner
   m_TagString: Untagged
@@ -790,7 +806,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271986268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f5e75d73cecbac4797efbc85664db7e, type: 3}
   m_Name: 
@@ -812,6 +828,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &271986271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271986268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e1c025148d975d4ca7b2ae6e5054bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meatPrototype: {fileID: 6255611184513940156, guid: be514c487eb759b418b93903cc49629b, type: 3}
+  meteorPrototype: {fileID: 6255611184513940156, guid: 5ff3ff9e830d5674b94c7e6af55e1fa8, type: 3}
+  numMeatInPool: 3
+  numMeteorInPool: 6
 --- !u!1 &286419366
 GameObject:
   m_ObjectHideFlags: 0
