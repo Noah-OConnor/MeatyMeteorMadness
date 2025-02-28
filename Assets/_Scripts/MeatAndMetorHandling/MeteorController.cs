@@ -3,7 +3,7 @@
 // DESIGN PATTERNS - Template Method, Prototype
 // Implements the Template Method pattern by following a strict Update() sequence from FallingObject.
 // Implements the Prototype pattern by allowing Meteor objects to be cloned instead of instantiated.
-public class _MeteorController : FallingObject
+public class MeteorController : FallingObject
 {
     private Animator animator;
 
@@ -17,9 +17,9 @@ public class _MeteorController : FallingObject
     {
         if (contact)
         {
-            if (!_GameManager.instance.GetInvincible())
+            if (!GameManager.instance.GetInvincible())
             {
-                _GameManager.instance.DamagePlayer();
+                GameManager.instance.DamagePlayer();
                 DisableSelf();
             }
         }

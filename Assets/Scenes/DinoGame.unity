@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 90544306}
   - component: {fileID: 90544305}
-  - component: {fileID: 90544304}
   - component: {fileID: 90544308}
   - component: {fileID: 90544309}
   - component: {fileID: 90544310}
@@ -141,21 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &90544304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 90544302}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfb831376332c3d419501bbcb51bdc41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 5
-  damageMaterial: {fileID: 2100000, guid: 40adbadda85160c45b42be63bf957689, type: 2}
-  animator: {fileID: 0}
 --- !u!212 &90544305
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -834,29 +818,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 271986270}
-  - component: {fileID: 271986269}
   - component: {fileID: 271986271}
   m_Layer: 0
-  m_Name: MeteorSpawner
+  m_Name: FallingObjectSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &271986269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 271986268}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f5e75d73cecbac4797efbc85664db7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  meteorPrefab: {fileID: 6255611184513940156, guid: 0c44902bc8069434ab309b2d5908f0e8, type: 3}
-  meatPrefab: {fileID: 6255611184513940156, guid: b7035709f45b4834da316819dee462fe, type: 3}
 --- !u!4 &271986270
 Transform:
   m_ObjectHideFlags: 0
@@ -2317,7 +2286,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 722940091}
-  - component: {fileID: 722940092}
   - component: {fileID: 722940093}
   m_Layer: 0
   m_Name: GameManager
@@ -2341,33 +2309,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &722940092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722940090}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7db1e33f642d634c8979cad4e5ee0dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLives: 3
-  timeScoreBonus: 10
-  initialMeteorSpeed: 5
-  meteorSpeed: 5
-  meteorSpeedMax: 16
-  initialMeteorSpawnInterval: 1
-  meteorSpawnInterval: 1
-  meteorSpawnIntervalMin: 0.3
-  difficultyMultiplier: 0.05
-  meatSpawnRateMultiplier: 2.5
-  horizontalClamp: 8.5
-  munch: 0
-  hurt: 0
-  lose: 0
-  objectsToDelete: []
 --- !u!114 &722940093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5851,5 +5792,5 @@ SceneRoots:
   - {fileID: 271986270}
   - {fileID: 722940091}
   - {fileID: 2046156955}
-  - {fileID: 286419368}
   - {fileID: 105797027}
+  - {fileID: 286419368}

@@ -7,7 +7,7 @@ public class InputManager : MonoBehaviour
 {
     private static InputManager instance;
 
-    private _PlayerController playerController;
+    private PlayerController playerController;
 
     private void Awake()
     {
@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        playerController = FindFirstObjectByType<_PlayerController>();
+        playerController = FindFirstObjectByType<PlayerController>();
     }
 
     private void Update()
@@ -47,7 +47,7 @@ public class InputManager : MonoBehaviour
 
     private void HandlePlayerMovement()
     {
-        if (_GameManager.instance.lose) return;
+        if (GameManager.instance.lose) return;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         playerController.HandleMovement(horizontalInput);

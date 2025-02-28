@@ -1,6 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+// DESIGN PATTERN - Facade
+// Uses the InputManager to handle player movement instead of processing input directly.
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Material initialMaterial;
     [SerializeField] private Material damageMaterial;
-    public Animator animator;
+    private Animator animator;
 
     private Vector3 initialPosition;
 
@@ -23,19 +24,14 @@ public class PlayerController : MonoBehaviour
         initialMaterial = spriteRenderer.material;
     }
 
-    private void Update()
+    public void HandleMovement(float horizontalInput)
     {
-        if (_GameManager.instance.lose) return;
-        HandleMovement();
-    }
+        if (GameManager.instance.lose) return;
 
-    private void HandleMovement()
-    {
-        horizontalInput = Input.GetAxis("Horizontal");
         if (horizontalInput != 0)
         {
-            if (Mathf.Abs(transform.position.x + (horizontalInput * _GameManager.instance.GetMeteorSpeed()
-                * Time.deltaTime)) > _GameManager.instance.GetHorizontalClamp())
+            if (Mathf.Abs(transform.position.x + (horizontalInput * GameManager.instance.GetMeteorSpeed()
+                * Time.deltaTime)) > GameManager.instance.GetHorizontalClamp())
             {
                 movementVector.x = 0;
             }
@@ -44,21 +40,26 @@ public class PlayerController : MonoBehaviour
                 movementVector.x = horizontalInput;
             }
 
-            transform.Translate(movementVector * _GameManager.instance.GetMeteorSpeed() * Time.deltaTime);
+            transform.Translate(movementVector * GameManager.instance.GetMeteorSpeed() * Time.deltaTime);
         }
         else
         {
             movementVector.x = 0;
         }
 
-        if (_GameManager.instance.munch)
+        UpdateAnimation(horizontalInput);
+    }
+
+    private void UpdateAnimation(float horizontalInput)
+    {
+        if (GameManager.instance.munch)
         {
-            _GameManager.instance.munch = false;
+            GameManager.instance.munch = false;
             animator.Play("Player_Munch");
         }
-        else if (_GameManager.instance.hurt)
+        else if (GameManager.instance.hurt)
         {
-            _GameManager.instance.hurt = false;
+            GameManager.instance.hurt = false;
             animator.Play("Player_Hurt");
         }
         else
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour
     public void ResetMaterial()
     {
         spriteRenderer.material = initialMaterial;
-        _GameManager.instance.SetInvincible(false);
+        GameManager.instance.SetInvincible(false);
     }
 
     public void ResetPosition()

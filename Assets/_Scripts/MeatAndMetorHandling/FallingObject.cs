@@ -18,17 +18,17 @@ public abstract class FallingObject : MonoBehaviour, IPrototype<FallingObject>
     protected void OnEnable()
     {
         contact = false;
-        if (_GameManager.instance != null)
+        if (GameManager.instance != null)
         {
-            _GameManager.OnGameOver += DisableSelf;
+            GameManager.OnGameOver += DisableSelf;
         }
     }
 
     protected void OnDisable()
     {
-        if (_GameManager.instance != null)
+        if (GameManager.instance != null)
         {
-            _GameManager.OnGameOver -= DisableSelf;
+            GameManager.OnGameOver -= DisableSelf;
         }
     }
 

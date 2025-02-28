@@ -14,32 +14,32 @@ public class FallingObjectSpawner : MonoBehaviour
     [SerializeField] private int numMeatInPool = 3;
     [SerializeField] private int numMeteorInPool = 6;
 
-    private ObjectPool<_MeatController> meatPool;
-    private ObjectPool<_MeteorController> meteorPool;
+    private ObjectPool<MeatController> meatPool;
+    private ObjectPool<MeteorController> meteorPool;
 
     private float meteorTimer;
     private float meatTimer;
 
     private void Start()
     {
-        meatPool = new ObjectPool<_MeatController>(meatPrototype.GetComponent<_MeatController>(), numMeatInPool);
-        meteorPool = new ObjectPool<_MeteorController>(meteorPrototype.GetComponent<_MeteorController>(), numMeteorInPool);
+        meatPool = new ObjectPool<MeatController>(meatPrototype.GetComponent<MeatController>(), numMeatInPool);
+        meteorPool = new ObjectPool<MeteorController>(meteorPrototype.GetComponent<MeteorController>(), numMeteorInPool);
     }
 
     private void Update()
     {
-        if (_GameManager.instance.lose) return;
+        if (GameManager.instance.lose) return;
 
         meteorTimer += Time.deltaTime;
         meatTimer += Time.deltaTime;
 
-        if (meteorTimer > _GameManager.instance.GetMeteorSpawnInterval())
+        if (meteorTimer > GameManager.instance.GetMeteorSpawnInterval())
         {
             SpawnMeteor();
             meteorTimer = 0;
         }
 
-        if (meatTimer > _GameManager.instance.GetMeteorSpawnInterval() * _GameManager.instance.GetMeatSpawnRateMultiplier())
+        if (meatTimer > GameManager.instance.GetMeteorSpawnInterval() * GameManager.instance.GetMeatSpawnRateMultiplier())
         {
             SpawnMeat();
             meatTimer = 0;
@@ -48,17 +48,17 @@ public class FallingObjectSpawner : MonoBehaviour
 
     private void SpawnMeteor()
     {
-        _MeteorController meteor = meteorPool.GetObject();
-        meteor.transform.position = new Vector2(Random.Range(-_GameManager.instance.GetHorizontalClamp(), _GameManager.instance.GetHorizontalClamp()), 7);
+        MeteorController meteor = meteorPool.GetObject();
+        meteor.transform.position = new Vector2(Random.Range(-GameManager.instance.GetHorizontalClamp(), GameManager.instance.GetHorizontalClamp()), 7);
         float randomModifier = (Random.Range(0, 200) * 0.01f) - 1;
-        meteor.GetComponent<_MeteorController>().SetMovementSpeed(_GameManager.instance.GetMeteorSpeed() + randomModifier);
+        meteor.GetComponent<MeteorController>().SetMovementSpeed(GameManager.instance.GetMeteorSpeed() + randomModifier);
     }
 
     private void SpawnMeat()
     {
-        _MeatController meat = meatPool.GetObject();
-        meat.transform.position = new Vector2(Random.Range(-_GameManager.instance.GetHorizontalClamp(), _GameManager.instance.GetHorizontalClamp()), 7);
+        MeatController meat = meatPool.GetObject();
+        meat.transform.position = new Vector2(Random.Range(-GameManager.instance.GetHorizontalClamp(), GameManager.instance.GetHorizontalClamp()), 7);
         float randomModifier = (Random.Range(0, 150) * 0.01f) - 0.75f;
-        meat.GetComponent<_MeatController>().SetMovementSpeed((_GameManager.instance.GetMeteorSpeed() * 0.75f) + randomModifier);
+        meat.GetComponent<MeatController>().SetMovementSpeed((GameManager.instance.GetMeteorSpeed() * 0.75f) + randomModifier);
     }
 }

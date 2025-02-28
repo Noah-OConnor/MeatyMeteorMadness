@@ -28,20 +28,20 @@ public class HUDController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_GameManager.instance == null || hud == null) return;
-        _GameManager.OnScoreUpdated += hud.UpdateScore;
-        _GameManager.OnLivesUpdated += hud.UpdateLives;
-        _GameManager.OnTimeUpdated += hud.UpdateTime;
-        _GameManager.OnMeatCountUpdated += hud.UpdateMeatCount;
+        if (GameManager.instance == null || hud == null) return;
+        GameManager.OnScoreUpdated += hud.UpdateScore;
+        GameManager.OnLivesUpdated += hud.UpdateLives;
+        GameManager.OnTimeUpdated += hud.UpdateTime;
+        GameManager.OnMeatCountUpdated += hud.UpdateMeatCount;
     }
 
     private void OnDisable()
     {
-        if (_GameManager.instance == null || hud == null) return;
-        _GameManager.OnScoreUpdated -= hud.UpdateScore;
-        _GameManager.OnLivesUpdated -= hud.UpdateLives;
-        _GameManager.OnTimeUpdated -= hud.UpdateTime;
-        _GameManager.OnMeatCountUpdated -= hud.UpdateMeatCount;
+        if (GameManager.instance == null || hud == null) return;
+        GameManager.OnScoreUpdated -= hud.UpdateScore;
+        GameManager.OnLivesUpdated -= hud.UpdateLives;
+        GameManager.OnTimeUpdated -= hud.UpdateTime;
+        GameManager.OnMeatCountUpdated -= hud.UpdateMeatCount;
     }
 
     private void Awake()

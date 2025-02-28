@@ -62,7 +62,7 @@ public class AudioManager : MonoBehaviour
         sounds[6].source.Stop(); // 6 is menu_music_loop
         yield return new WaitForSeconds(sounds[5].clip.length);
         if (!inGame || sounds[4].source.isPlaying || sounds[6].source.isPlaying
-            || _GameManager.instance.GetGameTime() < source5time) yield break;
+            || GameManager.instance.GetGameTime() < source5time) yield break;
         sounds[4].source.Play(); // 4 is in_game_music_loop
         sounds[5].source.Stop();
     }

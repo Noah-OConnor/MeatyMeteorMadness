@@ -9,9 +9,9 @@ using UnityEngine;
 // Implements the Observer pattern using C# events to update
 // the HUD UI and disable meteors and meats when the player loses
 
-public class _GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static _GameManager instance;
+    public static GameManager instance;
     [SerializeField] private int maxLives;
     private int lives;
     private int totalMeat;
@@ -22,7 +22,7 @@ public class _GameManager : MonoBehaviour
     [SerializeField] private int timeScoreBonus;
     private float scoreTimer;
 
-    private _PlayerController playerController;
+    private PlayerController playerController;
     private HUDController inGameUiController;
     private MenuUiController menuUiController;
 
@@ -64,7 +64,7 @@ public class _GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        playerController = FindFirstObjectByType<_PlayerController>();
+        playerController = FindFirstObjectByType<PlayerController>();
         menuUiController = FindFirstObjectByType<MenuUiController>();
         inGameUiController = FindFirstObjectByType<HUDController>();
 
