@@ -9,7 +9,6 @@ public class MeatFactory : FallingObjectFactory<MeatController>
     public override MeatController Create()
     {
         MeatController newMeat = prototype.Clone() as MeatController;
-        newMeat.SetMovementSpeed(GameManager.instance.GetMeteorSpeed() * 0.75f);
         return newMeat;
     }
 }

@@ -9,7 +9,6 @@ public class MeteorFactory : FallingObjectFactory<MeteorController>
     public override MeteorController Create()
     {
         MeteorController newMeteor = prototype.Clone() as MeteorController;
-        newMeteor.SetMovementSpeed(GameManager.instance.GetMeteorSpeed());
         return newMeteor;
     }
 }

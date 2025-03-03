@@ -9,14 +9,16 @@ using UnityEngine;
 public class ObjectPool<T> where T : FallingObject
 {
     private List<T> pool = new List<T>();
-    private T prototype;
+    private FallingObjectFactory<T> factory;
+    private int initialSize;
 
-    public ObjectPool(T prototype, int initialSize)
+    public ObjectPool(FallingObjectFactory<T> factory, int initialSize)
     {
-        this.prototype = prototype;
+        this.initialSize = initialSize;
+        this.factory = factory;
         for (int i = 0; i < initialSize; i++)
         {
-            T obj = GameObject.Instantiate(prototype);
+            T obj = factory.Create();
             obj.gameObject.SetActive(false);
             pool.Add(obj);
         }
@@ -33,8 +35,22 @@ public class ObjectPool<T> where T : FallingObject
             }
         }
 
-        T newObj = GameObject.Instantiate(prototype);
+        T newObj = factory.Create();
         pool.Add(newObj);
         return newObj;
+    }
+
+    public void RemoveExtraObjects()
+    {
+        while (pool.Count > initialSize)
+        {
+            GameObject.Destroy(pool[pool.Count - 1].gameObject);
+            pool.RemoveAt(pool.Count - 1);
+        }
+
+        foreach (FallingObject fallingObject in pool)
+        {
+            fallingObject.DisableSelf();
+        }
     }
 }

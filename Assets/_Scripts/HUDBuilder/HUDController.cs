@@ -22,9 +22,6 @@ public class HUDController : MonoBehaviour
     [SerializeField] private GameObject meatIcon;
 
     private HUD hud;
-    private int lastScore;
-    private int lastLives;
-    private int lastMeatCount;
 
     private void OnEnable()
     {

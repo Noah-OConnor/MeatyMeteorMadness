@@ -22,8 +22,20 @@ public class FallingObjectSpawner : MonoBehaviour
 
     private void Start()
     {
-        meatPool = new ObjectPool<MeatController>(meatPrototype.GetComponent<MeatController>(), numMeatInPool);
-        meteorPool = new ObjectPool<MeteorController>(meteorPrototype.GetComponent<MeteorController>(), numMeteorInPool);
+        MeatFactory meatFactory = new MeatFactory(meatPrototype.GetComponent<MeatController>());
+        MeteorFactory meteorFactory = new MeteorFactory(meteorPrototype.GetComponent<MeteorController>());
+
+        meatPool = new ObjectPool<MeatController>(meatFactory, numMeatInPool);
+        meteorPool = new ObjectPool<MeteorController>(meteorFactory, numMeteorInPool);
+
+        GameManager.OnGameOver += meatPool.RemoveExtraObjects;
+        GameManager.OnGameOver += meteorPool.RemoveExtraObjects;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnGameOver -= meatPool.RemoveExtraObjects;
+        GameManager.OnGameOver -= meteorPool.RemoveExtraObjects;
     }
 
     private void Update()

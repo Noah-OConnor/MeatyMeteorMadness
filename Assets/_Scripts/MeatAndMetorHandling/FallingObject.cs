@@ -15,23 +15,6 @@ public abstract class FallingObject : MonoBehaviour, IPrototype<FallingObject>
         movementVector = Vector2.zero;
     }
 
-    protected void OnEnable()
-    {
-        contact = false;
-        if (GameManager.instance != null)
-        {
-            GameManager.OnGameOver += DisableSelf;
-        }
-    }
-
-    protected void OnDisable()
-    {
-        if (GameManager.instance != null)
-        {
-            GameManager.OnGameOver -= DisableSelf;
-        }
-    }
-
     // Sealed method enforces a fixed update sequence
     protected void Update()
     {
@@ -81,6 +64,7 @@ public abstract class FallingObject : MonoBehaviour, IPrototype<FallingObject>
 
     public virtual void DisableSelf()
     {
+        contact = false;
         gameObject.SetActive(false);
     }
         
